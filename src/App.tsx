@@ -1,4 +1,7 @@
-"use client";
+import { Buffer } from "buffer";
+window.Buffer = Buffer;
+
+("use client");
 
 import { BN } from "@coral-xyz/anchor";
 import {
