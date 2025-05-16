@@ -1,0 +1,530 @@
+{
+  "address": "Fu5sXvLemQ5meB4y3GWM4oacD2uDwbF8URFh2WpmCMeR",
+  "metadata": {
+    "name": "palapa_fun_rooms",
+    "version": "0.1.0",
+    "spec": "0.1.0",
+    "description": "Created with Anchor"
+  },
+  "instructions": [
+    {
+      "name": "announce_winner",
+      "docs": [
+        "Called by the room creator to declare the winner and distribute the vault funds."
+      ],
+      "discriminator": [52, 243, 52, 32, 196, 187, 186, 237],
+      "accounts": [
+        {
+          "name": "creator",
+          "writable": true,
+          "signer": true,
+          "relations": ["room_data"]
+        },
+        {
+          "name": "room_data",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [114, 111, 111, 109]
+              },
+              {
+                "kind": "account",
+                "path": "creator"
+              },
+              {
+                "kind": "arg",
+                "path": "room_seed"
+              }
+            ]
+          }
+        },
+        {
+          "name": "room_vault",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [118, 97, 117, 108, 116]
+              },
+              {
+                "kind": "account",
+                "path": "creator"
+              },
+              {
+                "kind": "arg",
+                "path": "room_seed"
+              }
+            ]
+          }
+        },
+        {
+          "name": "winner_account",
+          "writable": true
+        },
+        {
+          "name": "service_fee_recipient",
+          "writable": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "_room_seed",
+          "type": "string"
+        },
+        {
+          "name": "winner_pubkey",
+          "type": "pubkey"
+        }
+      ]
+    },
+    {
+      "name": "cancel_room",
+      "docs": [
+        "Allows the creator to cancel a room IF it's OpenForJoining/Created AND has no players."
+      ],
+      "discriminator": [91, 107, 215, 178, 200, 224, 241, 237],
+      "accounts": [
+        {
+          "name": "creator",
+          "writable": true,
+          "signer": true,
+          "relations": ["room_data"]
+        },
+        {
+          "name": "room_data",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [114, 111, 111, 109]
+              },
+              {
+                "kind": "account",
+                "path": "creator"
+              },
+              {
+                "kind": "arg",
+                "path": "room_seed"
+              }
+            ]
+          }
+        },
+        {
+          "name": "room_vault",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [118, 97, 117, 108, 116]
+              },
+              {
+                "kind": "account",
+                "path": "creator"
+              },
+              {
+                "kind": "arg",
+                "path": "room_seed"
+              }
+            ]
+          }
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "_room_seed",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "name": "create_room",
+      "docs": ["Creates a new game room associated with the creator."],
+      "discriminator": [130, 166, 32, 2, 247, 120, 178, 53],
+      "accounts": [
+        {
+          "name": "creator",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "room_data",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [114, 111, 111, 109]
+              },
+              {
+                "kind": "account",
+                "path": "creator"
+              },
+              {
+                "kind": "arg",
+                "path": "room_seed"
+              }
+            ]
+          }
+        },
+        {
+          "name": "room_vault",
+          "docs": [
+            "Space is 0, owner is SystemProgram. Anchor handles the init checks.",
+            "It only holds lamports transferred via CPI, used solely as a vault."
+          ],
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [118, 97, 117, 108, 116]
+              },
+              {
+                "kind": "account",
+                "path": "creator"
+              },
+              {
+                "kind": "arg",
+                "path": "room_seed"
+              }
+            ]
+          }
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "room_seed",
+          "type": "string"
+        },
+        {
+          "name": "max_players",
+          "type": "u16"
+        },
+        {
+          "name": "entry_fee",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "join_room",
+      "docs": [
+        "Allows a player to join an existing, open room by paying the entry fee."
+      ],
+      "discriminator": [95, 232, 188, 81, 124, 130, 78, 139],
+      "accounts": [
+        {
+          "name": "player",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "room_data",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [114, 111, 111, 109]
+              },
+              {
+                "kind": "account",
+                "path": "room_data.creator",
+                "account": "RoomData"
+              },
+              {
+                "kind": "arg",
+                "path": "room_seed"
+              }
+            ]
+          }
+        },
+        {
+          "name": "room_vault",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [118, 97, 117, 108, 116]
+              },
+              {
+                "kind": "account",
+                "path": "room_data.creator",
+                "account": "RoomData"
+              },
+              {
+                "kind": "arg",
+                "path": "room_seed"
+              }
+            ]
+          }
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "_room_seed",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "name": "start_room",
+      "docs": [
+        "Allows the room creator to start the game if it's open for joining.",
+        "This is typically used if the room doesn't fill up to max_players but the creator wants to proceed."
+      ],
+      "discriminator": [1, 255, 77, 194, 171, 170, 62, 248],
+      "accounts": [
+        {
+          "name": "creator",
+          "writable": true,
+          "signer": true,
+          "relations": ["room_data"]
+        },
+        {
+          "name": "room_data",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [114, 111, 111, 109]
+              },
+              {
+                "kind": "account",
+                "path": "creator"
+              },
+              {
+                "kind": "arg",
+                "path": "room_seed"
+              }
+            ]
+          }
+        }
+      ],
+      "args": [
+        {
+          "name": "_room_seed",
+          "type": "string"
+        }
+      ]
+    }
+  ],
+  "accounts": [
+    {
+      "name": "RoomData",
+      "discriminator": [176, 166, 69, 139, 32, 227, 244, 146]
+    }
+  ],
+  "errors": [
+    {
+      "code": 6000,
+      "name": "InvalidMaxPlayers",
+      "msg": "Invalid number of maximum players specified (must be > 1)."
+    },
+    {
+      "code": 6001,
+      "name": "InvalidEntryFee",
+      "msg": "Entry fee must be greater than zero."
+    },
+    {
+      "code": 6002,
+      "name": "InvalidRoomSeed",
+      "msg": "Room seed is invalid (empty or too long)."
+    },
+    {
+      "code": 6003,
+      "name": "BumpSeedNotFound",
+      "msg": "Could not find PDA bump seed."
+    },
+    {
+      "code": 6004,
+      "name": "RoomNotJoinable",
+      "msg": "Room is not in the correct state to be joined."
+    },
+    {
+      "code": 6005,
+      "name": "RoomFull",
+      "msg": "The room is already full."
+    },
+    {
+      "code": 6006,
+      "name": "PlayerAlreadyJoined",
+      "msg": "This player has already joined the room."
+    },
+    {
+      "code": 6007,
+      "name": "RoomNotInProgress",
+      "msg": "The room is not in progress, cannot announce winner."
+    },
+    {
+      "code": 6008,
+      "name": "WinnerNotInRoom",
+      "msg": "The declared winner is not listed as a player in this room."
+    },
+    {
+      "code": 6009,
+      "name": "WinnerAccountMismatch",
+      "msg": "The provided winner account does not match the winner pubkey."
+    },
+    {
+      "code": 6010,
+      "name": "VaultNotEmptyAfterPayout",
+      "msg": "Vault account was not empty after payout/recovery. Check transfer logic."
+    },
+    {
+      "code": 6011,
+      "name": "Unauthorized",
+      "msg": "Unauthorized: Only the room creator can perform this action."
+    },
+    {
+      "code": 6012,
+      "name": "CannotCancelRoomState",
+      "msg": "Room cannot be cancelled in its current state (must be Open/Created)."
+    },
+    {
+      "code": 6013,
+      "name": "CannotCancelRoomPlayersJoined",
+      "msg": "Room cannot be cancelled because players have already joined."
+    },
+    {
+      "code": 6014,
+      "name": "CalculationOverflow",
+      "msg": "Arithmetic overflow during fee or payout calculation."
+    },
+    {
+      "code": 6015,
+      "name": "InvalidServiceWallet",
+      "msg": "The provided service fee recipient account does not match the expected address."
+    },
+    {
+      "code": 6016,
+      "name": "InsufficientFundsForPayout",
+      "msg": "Insufficient funds in vault to cover calculated fees and payout (negative prize share)."
+    },
+    {
+      "code": 6017,
+      "name": "MaxPlayersExceedsLimit",
+      "msg": "Requested max players exceeds the program's limit used for space allocation."
+    },
+    {
+      "code": 6018,
+      "name": "InvalidCreator",
+      "msg": "Invalid Creator account provided for seed derivation."
+    },
+    {
+      "code": 6019,
+      "name": "RoomNotOpenForStarting",
+      "msg": "Room is not in the OpenForJoining state, cannot be started."
+    }
+  ],
+  "types": [
+    {
+      "name": "RoomData",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "creator",
+            "type": "pubkey"
+          },
+          {
+            "name": "room_seed",
+            "type": "string"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          },
+          {
+            "name": "vault_bump",
+            "type": "u8"
+          },
+          {
+            "name": "status",
+            "type": {
+              "defined": {
+                "name": "RoomStatus"
+              }
+            }
+          },
+          {
+            "name": "winner",
+            "type": {
+              "option": "pubkey"
+            }
+          },
+          {
+            "name": "max_players",
+            "type": "u16"
+          },
+          {
+            "name": "entry_fee",
+            "type": "u64"
+          },
+          {
+            "name": "players",
+            "type": {
+              "vec": "pubkey"
+            }
+          },
+          {
+            "name": "creation_timestamp",
+            "type": "i64"
+          },
+          {
+            "name": "end_timestamp",
+            "type": {
+              "option": "i64"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "RoomStatus",
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "name": "Created"
+          },
+          {
+            "name": "OpenForJoining"
+          },
+          {
+            "name": "InProgress"
+          },
+          {
+            "name": "Finished"
+          },
+          {
+            "name": "Cancelled"
+          }
+        ]
+      }
+    }
+  ]
+}
