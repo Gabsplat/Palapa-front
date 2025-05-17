@@ -212,7 +212,3 @@ _Happy Gaming on Solana!_ 🌴☀️
 [Solana-url]: https://solana.com/
 [Anchor-shield]: https://img.shields.io/badge/Anchor-0066FF?style=for-the-badge&logoColor=white
 [Anchor-url]: https://www.anchor-lang.com/
-
-```
-
-```
