@@ -199,16 +199,3 @@ The application uses [Tailwind CSS](https://tailwindcss.com/) for styling. Custo
 ---
 
 _Happy Gaming on Solana!_ 🌴☀️
-
-[React-shield]: https://img.shields.io/badge/React-19-61DAFB?style=for-the-badge&logo=react&logoColor=white
-[React-url]: https://reactjs.org/
-[Vite-shield]: https://img.shields.io/badge/Vite-%23646CFF.svg?style=for-the-badge&logo=vite&logoColor=white
-[Vite-url]: https://vitejs.dev/
-[TypeScript-shield]: https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white
-[TypeScript-url]: https://www.typescriptlang.org/
-[Tailwind-shield]: https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white
-[Tailwind-url]: https://tailwindcss.com/
-[Solana-shield]: https://img.shields.io/badge/Solana-black?style=for-the-badge&logo=solana&logoColor=14F195
-[Solana-url]: https://solana.com/
-[Anchor-shield]: https://img.shields.io/badge/Anchor-0066FF?style=for-the-badge&logoColor=white
-[Anchor-url]: https://www.anchor-lang.com/
