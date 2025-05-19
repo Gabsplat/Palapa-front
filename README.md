@@ -1,12 +1,5 @@
 # Palapa 🌴 - Solana Game Room Frontend
 
-![React][React-shield]][React-url]
-![Vite][Vite-shield]][Vite-url]
-![TypeScript][TypeScript-shield]][TypeScript-url]
-![Tailwind CSS][Tailwind-shield]][Tailwind-url]
-![Solana][Solana-shield]][Solana-url]
-![Anchor][Anchor-shield]][Anchor-url]
-
 Palapa allows users to connect their Solana wallets, create game rooms with entry fees, join existing rooms, and (for room creators) manage the game lifecycle, including starting the game and announcing a winner to distribute the prize pool.
 
 ---
